@@ -1,11 +1,11 @@
-package com.example.cardvalidator.dto;
+package com.example.common.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Schema(description = "Данные пластиковой карты для проверки")
-public record CardDataRequest(
+public record CardData(
 
         @NotBlank(message = "Card number is required")
         @Pattern(regexp = "\\d+", message = "Card number must contain only digits")

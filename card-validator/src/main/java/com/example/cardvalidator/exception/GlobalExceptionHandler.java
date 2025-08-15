@@ -1,6 +1,7 @@
 package com.example.cardvalidator.exception;
 
-import com.example.cardvalidator.dto.ValidationResult;
+
+import com.example.common.dto.ValidationResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

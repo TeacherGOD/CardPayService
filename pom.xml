@@ -17,6 +17,8 @@
 
     <modules>
         <module>card-validator</module>
+        <module>payment-authorizer</module>
+        <module>common</module>
 
     </modules>
     <properties>
