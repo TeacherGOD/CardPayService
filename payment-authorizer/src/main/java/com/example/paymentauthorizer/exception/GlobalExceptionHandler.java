@@ -1,7 +1,8 @@
-package com.example.cardvalidator.exception;
+package com.example.paymentauthorizer.exception;
 
 
-import com.example.common.dto.payment.ValidationResult;
+import com.example.common.dto.bank.BankResponse;
+import com.example.common.enums.PaymentStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,10 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ValidationResult> handleValidationExceptions(
+    public ResponseEntity<BankResponse> handleValidationExceptions(
             MethodArgumentNotValidException ex
     ) {
-        String errorMessage = ex.getBindingResult()
+        String errorMessage = "Wrong request. "+ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
@@ -27,15 +28,15 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .badRequest()
-                .body(new ValidationResult(false, errorMessage));
+                .body(new BankResponse(null, PaymentStatus.DECLINED, errorMessage));
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ValidationResult> handleAllExceptions(Exception ex) {
+    public ResponseEntity<BankResponse> handleAllExceptions(Exception ex) {
         String errorMessage = "There was an internal server error. Please try later.";
         log.error("Необработанная ошибка.", ex);
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ValidationResult(false, errorMessage));
+                .body(new BankResponse(null, PaymentStatus.DECLINED, errorMessage));
     }
 }

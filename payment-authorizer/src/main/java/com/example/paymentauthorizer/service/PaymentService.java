@@ -1,9 +1,9 @@
 package com.example.paymentauthorizer.service;
 
 
-import com.example.paymentauthorizer.dto.AuthorizationResponse;
-import com.example.paymentauthorizer.dto.BankRequest;
-import com.example.paymentauthorizer.dto.PaymentRequest;
+import com.example.common.dto.bank.BankRequest;
+import com.example.common.dto.payment.AuthorizationResponse;
+import com.example.common.dto.payment.PaymentRequest;
 import com.example.paymentauthorizer.exception.BankGatewayTimeoutException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,10 +33,9 @@ public class PaymentService {
 
                     String transactionId = transactionService.generateTransactionId();
                     BankRequest bankRequest = new BankRequest(
-                            transactionId,
+                            request.cardData(),
                             request.amount(),
                             request.currency(),
-                            request.cardData(),
                             request.merchantId()
                     );
 

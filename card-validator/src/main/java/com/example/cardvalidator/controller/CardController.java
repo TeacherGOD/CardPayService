@@ -2,8 +2,8 @@ package com.example.cardvalidator.controller;
 
 
 import com.example.cardvalidator.service.CardValidationService;
-import com.example.common.dto.CardData;
-import com.example.common.dto.ValidationResult;
+import com.example.common.dto.payment.CardData;
+import com.example.common.dto.payment.ValidationResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;

@@ -1,7 +1,7 @@
 package com.example.paymentauthorizer.controller;
 
-import com.example.paymentauthorizer.dto.AuthorizationResponse;
-import com.example.paymentauthorizer.dto.PaymentRequest;
+import com.example.common.dto.payment.AuthorizationResponse;
+import com.example.common.dto.payment.PaymentRequest;
 import com.example.paymentauthorizer.service.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;

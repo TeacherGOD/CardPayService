@@ -1,10 +1,10 @@
 package com.example.paymentauthorizer.service;
 
-import com.example.common.dto.CardData;
-import com.example.common.dto.ValidationResult;
+import com.example.common.dto.bank.BankResponse;
+import com.example.common.dto.payment.CardData;
+import com.example.common.dto.payment.ValidationResult;
 import com.example.common.enums.PaymentStatus;
-import com.example.paymentauthorizer.dto.BankResponse;
-import com.example.paymentauthorizer.dto.PaymentRequest;
+import com.example.common.dto.payment.PaymentRequest;
 import com.example.paymentauthorizer.exception.BankGatewayTimeoutException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +16,7 @@ import reactor.test.StepVerifier;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.UUID;
 
 import static com.example.common.constant.ErrorMessages.BANK_TIMEOUT_ERROR;
 import static com.example.common.constant.ErrorMessages.CARD_INVALID;
@@ -57,7 +58,7 @@ class PaymentServiceTest {
     @Test
     void shouldApproveWhenAllValid() {
         PaymentRequest request = createValidRequest();
-        String transactionId = "txn-12345";
+        String transactionId = "txn-"+ UUID.randomUUID();
         BankResponse bankResponse = new BankResponse(
                 transactionId,
                 PaymentStatus.APPROVED,

@@ -1,7 +1,7 @@
 package com.example.paymentauthorizer.service;
 
-import com.example.common.dto.CardData;
-import com.example.common.dto.ValidationResult;
+import com.example.common.dto.payment.CardData;
+import com.example.common.dto.payment.ValidationResult;
 import com.example.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

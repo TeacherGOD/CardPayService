@@ -1,13 +1,13 @@
-package com.example.paymentauthorizer.dto;
+package com.example.common.dto.payment;
 
 
 
-import com.example.common.dto.CardData;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
 public record PaymentRequest(
+
         @NotNull(message = "Amount is required")
         @DecimalMin(value = "0.01", message = "Amount must be at least 0.01")
         BigDecimal amount,
@@ -19,7 +19,7 @@ public record PaymentRequest(
         @NotNull(message = "Card data is required")
         CardData cardData,
 
-        @NotBlank(message = "Merchant ID is required")
+        @NotBlank
         String merchantId
 ) {
 }
