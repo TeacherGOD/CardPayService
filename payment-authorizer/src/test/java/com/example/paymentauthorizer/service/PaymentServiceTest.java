@@ -62,7 +62,10 @@ class PaymentServiceTest {
         BankResponse bankResponse = new BankResponse(
                 transactionId,
                 PaymentStatus.APPROVED,
-                "Approved"
+                "Approved",
+                BigDecimal.valueOf(9999.99),
+                "USD",
+                "123"
         );
 
         when(cardValidationClient.validateCard(any()))
@@ -121,7 +124,10 @@ class PaymentServiceTest {
         BankResponse bankResponse = new BankResponse(
                 transactionId,
                 PaymentStatus.DECLINED,
-                "Insufficient funds"
+                "Insufficient funds",
+                BigDecimal.valueOf(9999.99),
+                "USD",
+                "123"
         );
 
         when(cardValidationClient.validateCard(any()))

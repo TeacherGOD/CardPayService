@@ -20,13 +20,19 @@ public class BankService {
             return new BankResponse(
                     bankTransactionId,
                     PaymentStatus.APPROVED,
-                    "Transaction status"
+                    "Approved transaction (less than " + MAX_APPROVED_AMOUNT + ")",
+                    request.amount(),
+                    request.currency(),
+                    request.merchantId()
             );
         } else {
             return new BankResponse(
                     bankTransactionId,
                     PaymentStatus.DECLINED,
-                    "Amount exceeds limit of 10000"
+                    "Amount exceeds limit of 10000",
+                    request.amount(),
+                    request.currency(),
+                    request.merchantId()
             );
         }
     }

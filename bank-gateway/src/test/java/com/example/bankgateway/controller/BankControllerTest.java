@@ -2,8 +2,6 @@ package com.example.bankgateway.controller;
 
 import com.example.common.dto.bank.BankResponse;
 import com.example.bankgateway.service.BankService;
-import com.example.common.dto.bank.BankRequest;
-import com.example.common.dto.payment.CardData;
 import com.example.common.enums.PaymentStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +30,12 @@ class BankControllerTest {
     void shouldApproveTransactionWhenAmountBelowLimit() throws Exception {
 
         given(bankService.authorizeTransaction(any()))
-                .willReturn(new BankResponse("bank-txn-123", PaymentStatus.APPROVED, "Approved"));
+                .willReturn(new BankResponse("bank-txn-123",
+                        PaymentStatus.APPROVED,
+                        "Approved",
+                        BigDecimal.valueOf(9999.99),
+                        "USD",
+                        "merch-123"));
         String requestJson = """
         {
             "cardData": {
@@ -56,7 +59,13 @@ class BankControllerTest {
     void shouldDeclineTransactionWhenAmountExceedsLimit() throws Exception {
 
         given(bankService.authorizeTransaction(any()))
-                .willReturn(new BankResponse("bank-txn-456", PaymentStatus.DECLINED, "Amount exceeds limit"));
+                .willReturn(new BankResponse(
+                        "bank-txn-456",
+                        PaymentStatus.DECLINED,
+                        "Amount exceeds limit",
+                        BigDecimal.valueOf(10000.01),
+                        "EUR",
+                        "merch-123"));
 
         String requestJson = """
         {
