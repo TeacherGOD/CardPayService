@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,10 +27,9 @@ public class PaymentProcessingController {
                     @ApiResponse(responseCode = "400", description = "Invalid input data")
             }
     )
-    public ResponseEntity<FinalTransactionStatus> processTransaction(
+    public FinalTransactionStatus processTransaction(
             @Valid @RequestBody BankResponse bankResponse
     ) {
-        FinalTransactionStatus result = processingService.processBankResponse(bankResponse);
-        return ResponseEntity.ok(result);
+        return processingService.processBankResponse(bankResponse);
     }
 }

@@ -23,7 +23,6 @@ import static com.example.common.constant.ErrorMessages.CARD_INVALID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-
 @ExtendWith(MockitoExtension.class)
 class PaymentServiceTest {
 
@@ -41,7 +40,6 @@ class PaymentServiceTest {
 
     @Test
     void shouldDeclineWhenCardInvalid() {
-
         PaymentRequest request = createValidRequest();
         ValidationResult invalidCard = new ValidationResult(false, CARD_INVALID);
 
@@ -58,14 +56,11 @@ class PaymentServiceTest {
     @Test
     void shouldApproveWhenAllValid() {
         PaymentRequest request = createValidRequest();
-        String transactionId = "txn-"+ UUID.randomUUID();
+        String transactionId = "txn-" + UUID.randomUUID();
         BankResponse bankResponse = new BankResponse(
-                transactionId,
+                "bank-txn-" + UUID.randomUUID(),
                 PaymentStatus.APPROVED,
-                "Approved",
-                BigDecimal.valueOf(9999.99),
-                "USD",
-                "123"
+                "Approved"
         );
 
         when(cardValidationClient.validateCard(any()))
@@ -122,12 +117,9 @@ class PaymentServiceTest {
         PaymentRequest request = createValidRequest();
         String transactionId = "txn-12345";
         BankResponse bankResponse = new BankResponse(
-                transactionId,
+                "bank-txn-" + UUID.randomUUID(),
                 PaymentStatus.DECLINED,
-                "Insufficient funds",
-                BigDecimal.valueOf(9999.99),
-                "USD",
-                "123"
+                "Insufficient funds"
         );
 
         when(cardValidationClient.validateCard(any()))

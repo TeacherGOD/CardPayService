@@ -1,12 +1,15 @@
 package com.example.paymentprocessor.dto;
 
-import com.example.common.enums.PaymentStatus;
+import com.example.common.enums.FinalPaymentStatus;
+import jakarta.validation.constraints.NotNull;
 
 public record FinalTransactionStatus(
 
+        @NotNull
         String transactionId,
 
-        PaymentStatus status,
+        @NotNull
+        FinalPaymentStatus status,
 
         String message
 ) {

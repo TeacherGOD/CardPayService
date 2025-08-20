@@ -10,8 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.math.BigDecimal;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -28,14 +26,13 @@ class BankControllerTest {
 
     @Test
     void shouldApproveTransactionWhenAmountBelowLimit() throws Exception {
-
         given(bankService.authorizeTransaction(any()))
-                .willReturn(new BankResponse("bank-txn-123",
+                .willReturn(new BankResponse(
+                        "bank-txn-123",
                         PaymentStatus.APPROVED,
-                        "Approved",
-                        BigDecimal.valueOf(9999.99),
-                        "USD",
-                        "merch-123"));
+                        "Approved"
+                ));
+
         String requestJson = """
         {
             "cardData": {
@@ -47,25 +44,24 @@ class BankControllerTest {
             "currency": "USD",
             "merchantId": "merch-123"
         }""";
+
         mockMvc.perform(post("/bank/authorize")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
-                .andExpect(jsonPath("$.status").value(PaymentStatus.APPROVED.toString()))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.bankTransactionId").value("bank-txn-123"))
+                .andExpect(jsonPath("$.status").value("APPROVED"))
                 .andExpect(jsonPath("$.reason").value("Approved"));
     }
 
     @Test
     void shouldDeclineTransactionWhenAmountExceedsLimit() throws Exception {
-
         given(bankService.authorizeTransaction(any()))
                 .willReturn(new BankResponse(
                         "bank-txn-456",
                         PaymentStatus.DECLINED,
-                        "Amount exceeds limit",
-                        BigDecimal.valueOf(10000.01),
-                        "EUR",
-                        "merch-123"));
+                        "Amount exceeds limit"
+                ));
 
         String requestJson = """
         {
@@ -78,20 +74,33 @@ class BankControllerTest {
             "currency": "EUR",
             "merchantId": "merch-123"
         }""";
+
         mockMvc.perform(post("/bank/authorize")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.status").value(PaymentStatus.DECLINED.toString()))
                 .andExpect(jsonPath("$.bankTransactionId").value("bank-txn-456"))
+                .andExpect(jsonPath("$.status").value("DECLINED"))
                 .andExpect(jsonPath("$.reason").value("Amount exceeds limit"));
     }
 
     @Test
     void shouldReturnBadRequestWhenInvalidInput() throws Exception {
+        String invalidRequestJson = """
+        {
+            "cardData": {
+                "cardNumber": "4111",
+                "expiryDate": "13/25",
+                "cvv": "abc"
+            },
+            "amount": -10,
+            "currency": "usd",
+            "merchantId": ""
+        }""";
+
         mockMvc.perform(post("/bank/authorize")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"cardNumber\":\"4111\",\"expiryDate\":\"13/25\",\"cvv\":\"abc\",\"amount\":-10,\"currency\":\"usd\"}"))
+                        .content(invalidRequestJson))
                 .andExpect(status().isBadRequest());
     }
 }

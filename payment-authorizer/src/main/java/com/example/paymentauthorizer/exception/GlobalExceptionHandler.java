@@ -31,10 +31,7 @@ public class GlobalExceptionHandler {
                 .body(new BankResponse(
                         null,
                         PaymentStatus.DECLINED,
-                        errorMessage,
-                        null,
-                        null,
-                        null
+                        errorMessage
                 ));
     }
 
@@ -47,10 +44,7 @@ public class GlobalExceptionHandler {
                 .body(new BankResponse(
                         null,
                         PaymentStatus.ERROR,
-                        errorMessage,
-                        null,
-                        null,
-                        null
+                        errorMessage
                 ));
     }
 }
