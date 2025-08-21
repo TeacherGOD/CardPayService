@@ -1,12 +1,13 @@
 package com.example.cardvalidator.controller;
 
-import com.example.cardvalidator.dto.ValidationResult;
+
 import com.example.cardvalidator.service.CardValidationService;
+import com.example.common.dto.ValidationResult;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
-import static com.example.cardvalidator.constant.ErrorMessages.CARD_VALID;
+import static com.example.common.constant.ErrorMessages.CARD_VALID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

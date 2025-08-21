@@ -1,8 +1,8 @@
-package com.example.cardvalidator.dto;
+package com.example.common.dto;
 
+import com.example.common.constant.ErrorMessages;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import static com.example.cardvalidator.constant.ErrorMessages.CARD_VALID;
 
 @Schema(description = "Результат проверки карты")
 public record ValidationResult(
@@ -16,7 +16,7 @@ public record ValidationResult(
 
         @Schema(
                 description = "Детальное сообщение о результате проверки",
-                example = CARD_VALID,
+                example = ErrorMessages.CARD_VALID,
                 requiredMode = Schema.RequiredMode.REQUIRED
         )
         String message

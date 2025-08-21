@@ -1,8 +1,9 @@
 package com.example.cardvalidator.controller;
 
-import com.example.cardvalidator.dto.CardDataRequest;
-import com.example.cardvalidator.dto.ValidationResult;
+
 import com.example.cardvalidator.service.CardValidationService;
+import com.example.common.dto.CardData;
+import com.example.common.dto.ValidationResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -56,7 +57,7 @@ public class CardController {
                     }
             )
     )
-    public ValidationResult validateCard(@Valid @RequestBody CardDataRequest cardData) {
+    public ValidationResult validateCard(@Valid @RequestBody CardData cardData) {
         return validationService.validateCard(cardData);
     }
 }

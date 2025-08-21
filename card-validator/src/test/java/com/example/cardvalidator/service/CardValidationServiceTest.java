@@ -1,14 +1,15 @@
 package com.example.cardvalidator.service;
 
-import com.example.cardvalidator.dto.CardDataRequest;
-import com.example.cardvalidator.dto.ValidationResult;
+
+import com.example.common.dto.CardData;
+import com.example.common.dto.ValidationResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.example.cardvalidator.constant.ErrorMessages.*;
+import static com.example.common.constant.ErrorMessages.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -22,7 +23,7 @@ class CardValidationServiceTest {
 
     @Test
     void validCardShouldReturnSuccess() {
-        var cardData = new CardDataRequest(
+        var cardData = new CardData(
                 "4111111111111111",
                 "12/30",
                 "123"
@@ -38,7 +39,7 @@ class CardValidationServiceTest {
 
     @Test
     void invalidLuhnShouldReturnError() {
-        var cardData = new CardDataRequest(
+        var cardData = new CardData(
                 "4111111111111112",
                 "12/30",
                 "123"
@@ -49,12 +50,12 @@ class CardValidationServiceTest {
         ValidationResult result = validationService.validateCard(cardData);
 
         assertFalse(result.valid());
-        assertTrue(result.message().contains(CARD_INVALID_NUMBER));
+        assertTrue(result.message().contains(CARD_INVALID));
     }
 
     @Test
     void expiredCardShouldReturnError() {
-        var cardData = new CardDataRequest(
+        var cardData = new CardData(
                 "4111111111111111",
                 "12/20",
                 "123"
