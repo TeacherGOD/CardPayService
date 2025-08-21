@@ -28,7 +28,11 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .badRequest()
-                .body(new BankResponse(null, PaymentStatus.DECLINED, errorMessage));
+                .body(new BankResponse(
+                        null,
+                        PaymentStatus.DECLINED,
+                        errorMessage
+                ));
     }
 
     @ExceptionHandler(Exception.class)
@@ -37,6 +41,10 @@ public class GlobalExceptionHandler {
         log.error("Необработанная ошибка.", ex);
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new BankResponse(null, PaymentStatus.DECLINED, errorMessage));
+                .body(new BankResponse(
+                        null,
+                        PaymentStatus.ERROR,
+                        errorMessage
+                ));
     }
 }
