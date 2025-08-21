@@ -1,6 +1,7 @@
 package com.example.paymentprocessor.controller;
 
 import com.example.common.dto.bank.BankResponse;
+import com.example.common.enums.FinalPaymentStatus;
 import com.example.common.enums.PaymentStatus;
 import com.example.paymentprocessor.dto.FinalTransactionStatus;
 import com.example.paymentprocessor.service.PaymentProcessingService;
@@ -11,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.math.BigDecimal;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -34,12 +37,15 @@ class PaymentProcessingControllerTest {
         BankResponse request = new BankResponse(
                 "bank-txn-123",
                 PaymentStatus.APPROVED,
-                "Approved"
+                "Approved",
+                BigDecimal.valueOf(750.00),
+                "USD",
+                "merch-333"
         );
 
         FinalTransactionStatus response = new FinalTransactionStatus(
                 "bank-txn-123",
-                com.example.common.enums.FinalPaymentStatus.APPROVED,
+                FinalPaymentStatus.APPROVED,
                 "Transaction processed"
         );
 
@@ -50,7 +56,7 @@ class PaymentProcessingControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.transactionId").value("bank-txn-123"))
-                .andExpect(jsonPath("$.status").value("APPROVED"))
+                .andExpect(jsonPath("$.status").value(PaymentStatus.APPROVED.toString()))
                 .andExpect(jsonPath("$.message").value("Transaction processed"));
     }
 
@@ -59,13 +65,15 @@ class PaymentProcessingControllerTest {
         String invalidRequest = """
         {
             "bankTransactionId": "",
-            "status": "INVALID_STATUS"
+            "status": "INVALID_STATUS",
+            "amount": -100
         }""";
 
         mockMvc.perform(post("/payment/process")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(invalidRequest))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("MALFORMED_JSON"));
     }
 
     @Test
@@ -73,7 +81,10 @@ class PaymentProcessingControllerTest {
         BankResponse request = new BankResponse(
                 "bank-txn-123",
                 PaymentStatus.APPROVED,
-                "Approved"
+                "Approved",
+                BigDecimal.valueOf(300.00),
+                "USD",
+                "merch-555"
         );
 
         given(processingService.processBankResponse(any()))

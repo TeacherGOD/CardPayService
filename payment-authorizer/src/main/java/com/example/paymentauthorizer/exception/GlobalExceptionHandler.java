@@ -30,8 +30,11 @@ public class GlobalExceptionHandler {
                 .badRequest()
                 .body(new BankResponse(
                         null,
-                        PaymentStatus.DECLINED,
-                        errorMessage
+                        PaymentStatus.ERROR,
+                        errorMessage,
+                        null,
+                        null,
+                        null
                 ));
     }
 
@@ -44,7 +47,10 @@ public class GlobalExceptionHandler {
                 .body(new BankResponse(
                         null,
                         PaymentStatus.ERROR,
-                        errorMessage
+                        errorMessage,
+                        null,
+                        null,
+                        null
                 ));
     }
 }

@@ -1,4 +1,4 @@
-package com.example.paymentprocessor.exception;
+package com.example.transactionrecording.exception;
 
 public class DuplicateTransactionException extends RuntimeException {
     public DuplicateTransactionException(String message) {

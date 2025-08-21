@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -30,9 +32,10 @@ class BankControllerTest {
                 .willReturn(new BankResponse(
                         "bank-txn-123",
                         PaymentStatus.APPROVED,
-                        "Approved"
-                ));
-
+                        "Approved",
+                        BigDecimal.valueOf(9999.99),
+                        "USD",
+                        "merch-123"));
         String requestJson = """
         {
             "cardData": {
@@ -60,8 +63,10 @@ class BankControllerTest {
                 .willReturn(new BankResponse(
                         "bank-txn-456",
                         PaymentStatus.DECLINED,
-                        "Amount exceeds limit"
-                ));
+                        "Amount exceeds limit",
+                        BigDecimal.valueOf(10000.01),
+                        "EUR",
+                        "merch-123"));
 
         String requestJson = """
         {
