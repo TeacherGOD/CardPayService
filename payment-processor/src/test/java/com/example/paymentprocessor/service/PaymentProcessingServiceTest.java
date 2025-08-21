@@ -40,7 +40,8 @@ class PaymentProcessingServiceTest {
                 "Approved",
                 BigDecimal.valueOf(750),
                 "RUB",
-                "merch-333"
+                "merch-333",
+                "1@email.com"
         );
 
         when(transactionRecorderClient.recordTransaction(any(TransactionRecordRequest.class)))
@@ -77,7 +78,8 @@ class PaymentProcessingServiceTest {
                 "Insufficient funds",
                 BigDecimal.valueOf(750),
                 "RUB",
-                "merch-333"
+                "merch-333",
+                "1@email.com"
         );
 
         when(transactionRecorderClient.recordTransaction(any(TransactionRecordRequest.class)))
@@ -102,7 +104,8 @@ class PaymentProcessingServiceTest {
                 "Connection Error",
                 BigDecimal.valueOf(750),
                 "RUB",
-                "merch-333"
+                "merch-333",
+                "1@email.com"
         );
 
         when(transactionRecorderClient.recordTransaction(any(TransactionRecordRequest.class)))
@@ -127,7 +130,8 @@ class PaymentProcessingServiceTest {
                 null,
                 BigDecimal.valueOf(750),
                 "RUB",
-                "merch-333"
+                "merch-333",
+                "1@email.com"
         );
 
         when(transactionRecorderClient.recordTransaction(any(TransactionRecordRequest.class)))
@@ -152,7 +156,8 @@ class PaymentProcessingServiceTest {
                 "Approved",
                 BigDecimal.valueOf(750),
                 "RUB",
-                "merch-333"
+                "merch-333",
+                "1@email.com"
         );
 
         when(transactionRecorderClient.recordTransaction(any(TransactionRecordRequest.class)))

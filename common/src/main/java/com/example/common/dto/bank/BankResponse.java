@@ -1,10 +1,7 @@
 package com.example.common.dto.bank;
 
 import com.example.common.enums.PaymentStatus;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
@@ -27,7 +24,11 @@ public record BankResponse(
         String currency,
 
         @NotBlank(message = "Merchant ID is required")
-        String merchantId
+        String merchantId,
+
+        @NotBlank
+        @Email
+        String email
 ) {
 
 }

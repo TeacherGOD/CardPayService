@@ -1,10 +1,7 @@
 package com.example.common.dto.bank;
 
 import com.example.common.dto.payment.CardData;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
@@ -22,6 +19,10 @@ public record BankRequest(
         String currency,
 
         @NotBlank
-        String merchantId
+        String merchantId,
+
+        @NotBlank
+        @Email
+        String email
 ) {
 }

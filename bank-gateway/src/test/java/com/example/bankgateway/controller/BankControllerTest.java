@@ -35,7 +35,8 @@ class BankControllerTest {
                         "Approved",
                         BigDecimal.valueOf(9999.99),
                         "USD",
-                        "merch-123"));
+                        "merch-123",
+                        "1@email.com"));
         String requestJson = """
         {
             "cardData": {
@@ -45,7 +46,8 @@ class BankControllerTest {
             },
             "amount": 9999.99,
             "currency": "USD",
-            "merchantId": "merch-123"
+            "merchantId": "merch-123",
+            "email": "1@email.com"
         }""";
 
         mockMvc.perform(post("/bank/authorize")
@@ -66,7 +68,8 @@ class BankControllerTest {
                         "Amount exceeds limit",
                         BigDecimal.valueOf(10000.01),
                         "EUR",
-                        "merch-123"));
+                        "merch-123",
+                        "1@email.com"));
 
         String requestJson = """
         {
@@ -77,7 +80,8 @@ class BankControllerTest {
             },
             "amount": 10000.01,
             "currency": "EUR",
-            "merchantId": "merch-123"
+            "merchantId": "merch-123",
+            "email": "1@email.com"
         }""";
 
         mockMvc.perform(post("/bank/authorize")
@@ -100,7 +104,8 @@ class BankControllerTest {
             },
             "amount": -10,
             "currency": "usd",
-            "merchantId": ""
+            "merchantId": "",
+            "email": "1@email.com"
         }""";
 
         mockMvc.perform(post("/bank/authorize")
