@@ -32,7 +32,8 @@ class BankServiceTest {
                 new CardData("4111111111111111", "12/25", "123"),
                 BigDecimal.valueOf(9999.99),
                 "USD",
-                "merchant-123"
+                "merchant-123",
+                "1@email.com"
         );
 
         when(paymentProcessorClient.processTransaction(any()))
@@ -54,7 +55,8 @@ class BankServiceTest {
                 new CardData("4111111111111111", "12/25", "123"),
                 BigDecimal.valueOf(10000.01),
                 "USD",
-                "merchant-123"
+                "merchant-123",
+                "1@email.com"
         );
 
         when(paymentProcessorClient.processTransaction(any()))
@@ -76,7 +78,8 @@ class BankServiceTest {
                 new CardData("4111111111111111", "12/25", "123"),
                 BigDecimal.valueOf(5000.00),
                 "USD",
-                "merchant-123"
+                "merchant-123",
+                "1@email.com"
         );
 
         when(paymentProcessorClient.processTransaction(any()))

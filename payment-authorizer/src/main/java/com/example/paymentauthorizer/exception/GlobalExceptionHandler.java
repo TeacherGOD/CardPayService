@@ -34,6 +34,7 @@ public class GlobalExceptionHandler {
                         errorMessage,
                         null,
                         null,
+                        null,
                         null
                 ));
     }
@@ -48,6 +49,7 @@ public class GlobalExceptionHandler {
                         null,
                         PaymentStatus.ERROR,
                         errorMessage,
+                        null,
                         null,
                         null,
                         null

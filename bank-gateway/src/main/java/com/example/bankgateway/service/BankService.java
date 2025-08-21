@@ -31,7 +31,8 @@ public class BankService {
                     "Approved",
                     request.amount(),
                     request.currency(),
-                    request.merchantId()
+                    request.merchantId(),
+                    request.email()
             );
         } else {
             response = new BankResponse(
@@ -40,7 +41,8 @@ public class BankService {
                     "Amount exceeds limit",
                     request.amount(),
                     request.currency(),
-                    request.merchantId()
+                    request.merchantId(),
+                    request.email()
             );
         }
 

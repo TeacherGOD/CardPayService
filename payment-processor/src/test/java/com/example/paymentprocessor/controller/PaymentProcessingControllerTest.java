@@ -40,7 +40,8 @@ class PaymentProcessingControllerTest {
                 "Approved",
                 BigDecimal.valueOf(750.00),
                 "USD",
-                "merch-333"
+                "merch-333",
+                "1@email.com"
         );
 
         FinalTransactionStatus response = new FinalTransactionStatus(
@@ -84,7 +85,8 @@ class PaymentProcessingControllerTest {
                 "Approved",
                 BigDecimal.valueOf(300.00),
                 "USD",
-                "merch-555"
+                "merch-555",
+                "1@email.com"
         );
 
         given(processingService.processBankResponse(any()))

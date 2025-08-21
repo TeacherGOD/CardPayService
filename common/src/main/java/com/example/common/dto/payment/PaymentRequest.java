@@ -20,6 +20,10 @@ public record PaymentRequest(
         CardData cardData,
 
         @NotBlank
-        String merchantId
+        String merchantId,
+
+        @NotBlank
+        @Email
+        String email
 ) {
 }

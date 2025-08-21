@@ -36,7 +36,8 @@ public class PaymentService {
                             request.cardData(),
                             request.amount(),
                             request.currency(),
-                            request.merchantId()
+                            request.merchantId(),
+                            request.email()
                     );
 
                     return bankGatewayClient.authorizeTransaction(bankRequest)

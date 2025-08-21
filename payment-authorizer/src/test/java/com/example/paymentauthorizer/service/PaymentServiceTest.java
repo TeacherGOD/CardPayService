@@ -63,7 +63,8 @@ class PaymentServiceTest {
                 "Approved",
                 BigDecimal.valueOf(9999.99),
                 "USD",
-                "123"
+                "123",
+                "1@email.com"
         );
 
         when(cardValidationClient.validateCard(any()))
@@ -125,7 +126,8 @@ class PaymentServiceTest {
                 "Insufficient funds",
                 BigDecimal.valueOf(9999.99),
                 "USD",
-                "123"
+                "123",
+                "1@email.com"
         );
 
         when(cardValidationClient.validateCard(any()))
@@ -172,7 +174,8 @@ class PaymentServiceTest {
                 BigDecimal.valueOf(100.50),
                 "USD",
                 new CardData("4111111111111111", "12/25", "123"),
-                "merchant-123"
+                "merchant-123",
+                "1@email.com"
         );
     }
 }
