@@ -1,4 +1,4 @@
-package com.example.common.dto;
+package com.example.common.dto.payment;
 
 import com.example.common.constant.ErrorMessages;
 import io.swagger.v3.oas.annotations.media.Schema;

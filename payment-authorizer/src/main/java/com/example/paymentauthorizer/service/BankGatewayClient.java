@@ -1,8 +1,7 @@
 package com.example.paymentauthorizer.service;
 
-import com.example.common.enums.PaymentStatus;
-import com.example.paymentauthorizer.dto.BankRequest;
-import com.example.paymentauthorizer.dto.BankResponse;
+import com.example.common.dto.bank.BankRequest;
+import com.example.common.dto.bank.BankResponse;
 import com.example.paymentauthorizer.exception.BankGatewayTimeoutException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,19 +28,14 @@ public class BankGatewayClient {
 
     public Mono<BankResponse> authorizeTransaction(BankRequest request) {
 
-        BankResponse successResponse = new BankResponse(request.transactionId(), PaymentStatus.APPROVED, "APPROVED");
-        return Mono.just(successResponse)
-                .doOnSubscribe(sub -> log.info("Stub: Sending to bank: {}", request))
-                .doOnSuccess(res -> log.info("Stub: Bank response: {}", res));
-
-//        return webClient.post()
-//                .uri("/authorize")
-//                .bodyValue(request)
-//                .retrieve()
-//                .bodyToMono(BankResponse.class)
-//                .timeout(timeout, Mono.error(new BankGatewayTimeoutException()))
-//                .doOnSubscribe(sub -> log.info("Sending to bank: {}", request))
-//                .doOnSuccess(res -> log.info("Bank response: {}", res))
-//                .doOnError(e -> log.error("Bank communication error", e));
+        return webClient.post()
+                .uri("/bank/authorize")
+                .bodyValue(request)
+                .retrieve()
+                .bodyToMono(BankResponse.class)
+                .timeout(timeout, Mono.error(new BankGatewayTimeoutException()))
+                .doOnSubscribe(sub -> log.info("Sending to bank: {}", request))
+                .doOnSuccess(res -> log.info("Bank response: {}", res))
+                .doOnError(e -> log.error("Bank communication error", e));
     }
 }

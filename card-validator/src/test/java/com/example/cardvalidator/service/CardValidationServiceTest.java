@@ -1,8 +1,8 @@
 package com.example.cardvalidator.service;
 
 
-import com.example.common.dto.CardData;
-import com.example.common.dto.ValidationResult;
+import com.example.common.dto.payment.CardData;
+import com.example.common.dto.payment.ValidationResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

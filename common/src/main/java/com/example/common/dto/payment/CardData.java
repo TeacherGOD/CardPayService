@@ -1,4 +1,4 @@
-package com.example.common.dto;
+package com.example.common.dto.payment;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 public record CardData(
 
         @NotBlank(message = "Card number is required")
-        @Pattern(regexp = "\\d+", message = "Card number must contain only digits")
+        @Pattern(regexp = "\\d{13,19}", message = "Card number must be 13-19 digits")
         @Schema(
                 description = "Номер карты",
                 example = "4111111111111111",

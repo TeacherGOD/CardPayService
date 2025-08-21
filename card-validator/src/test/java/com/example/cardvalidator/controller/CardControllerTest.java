@@ -2,7 +2,7 @@ package com.example.cardvalidator.controller;
 
 
 import com.example.cardvalidator.service.CardValidationService;
-import com.example.common.dto.ValidationResult;
+import com.example.common.dto.payment.ValidationResult;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

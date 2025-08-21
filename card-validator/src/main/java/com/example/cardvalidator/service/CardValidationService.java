@@ -1,8 +1,8 @@
 package com.example.cardvalidator.service;
 
 
-import com.example.common.dto.CardData;
-import com.example.common.dto.ValidationResult;
+import com.example.common.dto.payment.CardData;
+import com.example.common.dto.payment.ValidationResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
