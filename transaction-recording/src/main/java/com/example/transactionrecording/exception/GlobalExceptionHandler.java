@@ -1,8 +1,7 @@
-package com.example.paymentprocessor.exception;
+package com.example.transactionrecording.exception;
 
 
-import com.example.paymentprocessor.dto.ErrorResponse;
-import jakarta.validation.ConstraintViolationException;
+import com.example.transactionrecording.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -17,15 +16,18 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ConstraintViolationException.class)
+    @ExceptionHandler(DuplicateTransactionException.class)
     public ResponseEntity<ErrorResponse> handleConstraintViolation(
-            ConstraintViolationException ex, WebRequest request
+            DuplicateTransactionException ex, WebRequest request
     ) {
-        String message = ex.getConstraintViolations().stream()
-                .map(v -> v.getPropertyPath() + ": " + v.getMessage())
-                .collect(Collectors.joining(", "));
+        return buildErrorResponse(HttpStatus.CONFLICT, "DUPLICATE TRANSACTION", "Transaction already saved", request);
+    }
 
-        return buildErrorResponse(HttpStatus.BAD_REQUEST, "VALIDATION_ERROR", message, request);
+    @ExceptionHandler(TransactionNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(
+            TransactionNotFoundException ex, WebRequest request
+    ) {
+        return buildErrorResponse(HttpStatus.NOT_FOUND, "NOT_FOUND", ex.getMessage(), request);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

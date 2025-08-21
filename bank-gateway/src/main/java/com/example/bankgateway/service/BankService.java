@@ -28,13 +28,19 @@ public class BankService {
             response = new BankResponse(
                     bankTransactionId,
                     PaymentStatus.APPROVED,
-                    "Approved"
+                    "Approved",
+                    request.amount(),
+                    request.currency(),
+                    request.merchantId()
             );
         } else {
             response = new BankResponse(
                     bankTransactionId,
                     PaymentStatus.DECLINED,
-                    "Amount exceeds limit"
+                    "Amount exceeds limit",
+                    request.amount(),
+                    request.currency(),
+                    request.merchantId()
             );
         }
 
