@@ -6,6 +6,7 @@ import com.example.loggingservice.entity.LogEntryEntity;
 import com.example.loggingservice.repository.LogEntryRepository;
 import com.example.loggingservice.specification.LogEntrySpecifications;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class LoggingService {
     private final LogEntryRepository repository;
 
@@ -24,6 +26,7 @@ public class LoggingService {
         entity.setMessage(logEntry.message());
         entity.setService(logEntry.service());
 
+        log.info("got log FROM: "+entity.getService() +". "+entity.getLevel() +". "+logEntry.message());
         repository.save(entity);
     }
 

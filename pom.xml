@@ -21,10 +21,17 @@
         <module>common</module>
         <module>bank-gateway</module>
         <module>notification-service</module>
+        <module>payment-processor</module>
+        <module>logging-service</module>
+        <module>transaction-recording</module>
 
     </modules>
     <properties>
         <java.version>21</java.version>
     </properties>
+
+    <dependencies>
+
+    </dependencies>
 
 </project>

@@ -1,0 +1,147 @@
+services:
+  card-validator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: card-validator
+    ports:
+      - "8080:8080"
+    environment:
+      - logging.service.url=http://logging-service:8086
+    depends_on:
+      logging-service:
+        condition: service_healthy
+
+  payment-authorizer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: payment-authorizer
+    ports:
+      - "8081:8081"
+    environment:
+      - services.card-validator.url=http://card-validator:8080
+      - bank.gateway.url=http://bank-gateway:8082
+      - logging.service.url=http://logging-service:8086
+    depends_on:
+      card-validator:
+        condition: service_started
+      bank-gateway:
+        condition: service_started
+      logging-service:
+        condition: service_healthy
+
+  bank-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: bank-gateway
+    ports:
+      - "8082:8082"
+    environment:
+      - payment.processor.url=http://payment-processor:8083
+      - logging.service.url=http://logging-service:8086
+    depends_on:
+      payment-processor:
+        condition: service_started
+      logging-service:
+        condition: service_healthy
+
+  payment-processor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: payment-processor
+    ports:
+      - "8083:8083"
+    environment:
+      - services.transaction-recorder.url=http://transaction-recording:8084
+      - services.notification.url=http://notification-service:8085
+      - logging.service.url=http://logging-service:8086
+    depends_on:
+      transaction-recording:
+        condition: service_started
+      notification-service:
+        condition: service_started
+      logging-service:
+        condition: service_healthy
+
+  transaction-recording:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: transaction-recording
+    ports:
+      - "8084:8084"
+    environment:
+      - spring.datasource.url=jdbc:postgresql://db:5432/payments
+      - spring.datasource.username=user
+      - spring.datasource.password=pass
+      - logging.service.url=http://logging-service:8086
+    depends_on:
+      db:
+        condition: service_healthy
+      logging-service:
+        condition: service_healthy
+
+  notification-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: notification-service
+    ports:
+      - "8085:8085"
+    environment:
+      - logging.service.url=http://logging-service:8086
+    depends_on:
+      logging-service:
+        condition: service_healthy
+
+  logging-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: logging-service
+    ports:
+      - "8086:8086"
+    environment:
+      - spring.datasource.url=jdbc:postgresql://db:5432/payments
+      - spring.datasource.username=user
+      - spring.datasource.password=pass
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8086/actuator/health"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: payments
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./transaction-recording/src/main/resources/data.sql:/docker-entrypoint-initdb.d/01-transaction.sql
+      - ./logging-service/src/main/resources/data.sql:/docker-entrypoint-initdb.d/02-logging.sql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U user -d payments" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data:
