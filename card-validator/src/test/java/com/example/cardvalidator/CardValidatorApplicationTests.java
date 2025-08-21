@@ -1,10 +1,10 @@
-package com.example.cardpayit;
+package com.example.cardvalidator;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CardPayItApplicationTests {
+class CardValidatorApplicationTests {
 
     @Test
     void contextLoads() {

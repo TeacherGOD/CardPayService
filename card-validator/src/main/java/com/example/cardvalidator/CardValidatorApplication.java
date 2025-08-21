@@ -1,13 +1,13 @@
-package com.example.cardpayit;
+package com.example.cardvalidator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CardPayItApplication {
+public class CardValidatorApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CardPayItApplication.class, args);
+        SpringApplication.run(CardValidatorApplication.class, args);
     }
 
 }
